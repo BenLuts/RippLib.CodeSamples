@@ -14,6 +14,6 @@ public class WeatherForecastEndpoints : ICarterModule
         {
             var forecasts = await weatherForecasts.ReadWeatherForecastsAsync();
             return Results.Ok(forecasts);
-        });
+        }).RequireAuthorization();
     }
 }

@@ -1,4 +1,6 @@
 ﻿using DotNet.Testcontainers.Containers;
+using OutsideInTestingDemo.Tests.Bootstrapping;
+using System.Net.Http.Headers;
 
 namespace OutsideTestingDemo.Tests.Bootstrapping;
 
@@ -19,7 +21,11 @@ public abstract class TestFixture<TApi, TContext> : IAsyncLifetime where TApi : 
 
     public HttpClient GetApiClient()
     {
-        return _apiFactory.CreateClient();
+        var client = _apiFactory.CreateClient();
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", FakeJwtTokens.GenerateJwtToken([]));
+
+        return client;
     }
 
     public Task SeedDatabaseAsync()
