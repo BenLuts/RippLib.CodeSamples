@@ -1,4 +1,6 @@
-﻿namespace OutsideInTestingDemo.App.DataLayer.Entities;
+﻿using OutsideInTestingDemo.App.Logic;
+
+namespace OutsideInTestingDemo.App.DataLayer.Entities;
 
 public class WeatherForecast
 {
@@ -7,4 +9,14 @@ public class WeatherForecast
     public int TemperatureC { get; set; }
     public string Summary { get; set; }
 
+    public static WeatherForecast FromModel(WeatherForecastModel forecastModel)
+    {
+        return new WeatherForecast()
+        {
+            Id = Guid.NewGuid(),
+            Date = forecastModel.Date,
+            TemperatureC = forecastModel.TemperatureC,
+            Summary = forecastModel.Summary
+        };
+    }
 }

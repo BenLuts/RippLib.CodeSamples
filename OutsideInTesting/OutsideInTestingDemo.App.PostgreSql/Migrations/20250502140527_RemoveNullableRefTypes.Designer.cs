@@ -2,8 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OutsideInTestingDemo.App.PostgreSql;
 
 #nullable disable
@@ -11,16 +12,18 @@ using OutsideInTestingDemo.App.PostgreSql;
 namespace OutsideInTestingDemo.App.PostgreSql.Migrations
 {
     [DbContext(typeof(PostgreDBContext))]
-    partial class PostgreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250502140527_RemoveNullableRefTypes")]
+    partial class RemoveNullableRefTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("OutsideInTestingDemo.App.DataLayer.Entities.WeatherForecast", b =>
                 {

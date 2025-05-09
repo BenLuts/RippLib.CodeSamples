@@ -4,5 +4,7 @@ namespace OutsideInTestingDemo.App.DataLayer.Interfaces;
 
 public interface IWeatherForecasts
 {
-    Task<List<WeatherForecastResponse>> ReadWeatherForecastsAsync();
+    Task<WeatherForecastModel> ReadAsync(Guid id);
+    Task<List<WeatherForecastModel>> ReadAsync();
+    Task<Guid> Create(WeatherForecastModel model);
 }

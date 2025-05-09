@@ -1,4 +1,6 @@
-﻿using OutsideInTestingDemo.App.PostgreSql;
+﻿using Npgsql;
+using OutsideInTestingDemo.App.PostgreSql;
+using Respawn;
 using Testcontainers.PostgreSql;
 
 namespace OutsideTestingDemo.Tests.Bootstrapping;
@@ -17,6 +19,29 @@ public sealed class TestFixtureWithPostgreSql : TestFixture<Program, PostgreDBCo
         _dbBootstrapper = new(_apiFactory);
 
         await InitializeDatabaseAsync();
+    }
+
+    protected override async Task InitializeDatabaseAsync()
+    {
+        await _dbBootstrapper.InitializeDatabaseAsync();
+
+        using var conn = new NpgsqlConnection(_dbContainer.GetConnectionString());
+        await conn.OpenAsync();
+        Respawner = await Respawner.CreateAsync(conn, new RespawnerOptions
+        {
+            SchemasToInclude = ["public"],
+            DbAdapter = DbAdapter.Postgres
+        });
+    }
+
+    public override async Task SeedDatabaseAsync()
+    {
+        using (var conn = new NpgsqlConnection(_dbContainer.GetConnectionString()))
+        {
+            await conn.OpenAsync();
+            await Respawner.ResetAsync(conn);
+        }
+        await _dbBootstrapper.ApplySeed();
     }
 }
 

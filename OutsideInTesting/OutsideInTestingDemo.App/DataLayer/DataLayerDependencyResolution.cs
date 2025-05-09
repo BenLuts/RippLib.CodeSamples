@@ -15,7 +15,7 @@ public static class DataLayerDependencyResolution
             options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
         });
 
-        builder.Services.AddScoped<IWeatherForecasts, WeatherForecastReader<TContext>>();
+        builder.Services.AddScoped<IWeatherForecasts, WeatherForecastsDataAccess<TContext>>();
 
         return builder;
     }
@@ -28,7 +28,7 @@ public static class DataLayerDependencyResolution
             options.UseNpgsql(dbDataSource.Build());
         });
 
-        builder.Services.AddScoped<IWeatherForecasts, WeatherForecastReader<TContext>>();
+        builder.Services.AddScoped<IWeatherForecasts, WeatherForecastsDataAccess<TContext>>();
 
         return builder;
     }

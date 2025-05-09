@@ -32,7 +32,6 @@ namespace OutsideInTestingDemo.App.SqlServer.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("Summary")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 

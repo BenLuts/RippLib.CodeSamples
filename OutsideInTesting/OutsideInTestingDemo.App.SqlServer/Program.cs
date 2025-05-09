@@ -1,5 +1,6 @@
 using Carter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using OutsideInTestingDemo.App.Bootstrapping;
 using OutsideInTestingDemo.App.DataLayer;
 
 namespace OutsideInTestingDemo.App.SqlServer;
@@ -13,7 +14,7 @@ public partial class Program
         var builder = WebApplication.CreateBuilder(args);
         builder.AddDataLayerSqlServer<SqlServerDBContext>();
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
-        builder.Services.AddAuthorization();
+        builder.Services.SetAuthorization();
 
         builder.Services.AddCarter();
         var app = builder.Build();

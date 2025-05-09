@@ -15,7 +15,6 @@ public sealed class TestFixtureWithSqlServer : TestFixture<Program, SqlServerDBC
         await _dbContainer.StartAsync();
         _apiFactory = new ApiFactory<Program>(_dbContainer.GetConnectionString());
         _dbBootstrapper = new(_apiFactory);
-
         await InitializeDatabaseAsync();
     }
 }

@@ -1,5 +1,6 @@
 using Carter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using OutsideInTestingDemo.App.Bootstrapping;
 using OutsideInTestingDemo.App.DataLayer;
 
 namespace OutsideInTestingDemo.App.PostgreSql;
@@ -14,7 +15,7 @@ public partial class Program
         builder.AddDataLayerPostgreSql<PostgreDBContext>();
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
-        builder.Services.AddAuthorization();
+        builder.Services.SetAuthorization();
 
         builder.Services.AddCarter();
         var app = builder.Build();

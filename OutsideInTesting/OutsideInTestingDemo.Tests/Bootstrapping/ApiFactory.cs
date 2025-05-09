@@ -26,11 +26,11 @@ public class ApiFactory<Program> : WebApplicationFactory<Program> where Program 
             {
                 var config = new OpenIdConnectConfiguration()
                 {
-                    Issuer = FakeJwtTokens.Issuer,
+                    Issuer = FakeJwtToken.Issuer,
                 };
 
-                options.Audience = FakeJwtTokens.Audience;
-                config.SigningKeys.Add(FakeJwtTokens.SecurityKey);
+                options.Audience = FakeJwtToken.Audience;
+                config.SigningKeys.Add(FakeJwtToken.SecurityKey);
                 options.Configuration = config;
             });
         });
