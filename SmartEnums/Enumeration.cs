@@ -6,7 +6,7 @@ namespace SmartEnums
     {
         public string Name { get; private set; }
 
-        public int Id { get; private set; }
+        public int Id { get; }
 
         public string Title => GetType().Name;
 
@@ -35,13 +35,14 @@ namespace SmartEnums
             if (obj is not Enumeration otherValue)
                 return false;
 
-            var typeMatches = GetType().Equals(obj.GetType());
+            var typeMatches = GetType() == obj.GetType();
             var valueMatches = Id.Equals(otherValue.Id);
 
             return typeMatches && valueMatches;
         }
 
-        public int CompareTo(object obj) => Id.CompareTo(((Enumeration)obj).Id);
+        public int CompareTo(object obj) =>
+            obj is Enumeration other ? Id.CompareTo(other.Id) : 1;
 
         public static bool operator ==(Enumeration a, Enumeration b)
         {
@@ -90,9 +91,7 @@ namespace SmartEnums
 
         public static T FindById<T>(int? id) where T : Enumeration
         {
-            if (id is null)
-                return null;
-            return Find<T>(e => e.Id == id);
+            return id is null ? null : Find<T>(e => e.Id == id);
         }
 
         public static T FindByName<T>(string name) where T : Enumeration
